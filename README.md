@@ -1,1 +1,12 @@
 # ISBANKMLCHALLENGE-2
+Açıklamalar:
+YIL_AY -harcamaların yapıldığı tarih (YIL ve AY formatında)
+ISLEM_TURU -harcamaların türü (peşin ya da taksitli)
+SEKTOR -harcamaların yapıldığı sektör
+CUSTOMER -her müşterinin unique müşteri numarası
+ISLEM_ADEDI -ilgili tarih, tür ve sektörde müşterinin yaptığı işlem adedi
+ISLEM_TUTARI -müşterinin ilgili tarih, tür ve sektörde yaptığı işlemlerin toplam tutarı
+
+Bizden istenen 2019 yılı Şubat ayı için toplam alışverişlerin sektörel bazda toplam ISLEM_TUTARI'nı tahmin etmemizdi. 
+
+Yarışmada belirleyici olan skor RMSLE idi. Regresyonda bazen negatif değerler de tahmin edilir. Bu sebeple "Root Mean Squared Logarithmic Error (RMSLE)" hesaplatmak hata ile sonuçlandı. Yükleme yaparken hata almamamın sebebi tüm tahminlemeler yapıldıktan sonra "submission_file" oluşturulurken veriyi sektörlere göre gruplandırmış olmak. Bu gruplandırmayı yaparken tahminlenen ISLEM_TUTARI değerleri toplanmış oldu. Dolayısıyla negetif değerler pozitif degerlerle toplandı. Ayrıca başka kaynaklardan veri setlerini birleştirmek serbestti. Ben de TUIK ve MERKEZ BANKASI verilerini modelene ekleyerek çeşitli denemeler yaptım. "Hane haklının maddi durumu" endekslerini veride bana verilen AY_YIL bilgilerini kullanarak birleştirdim. XGboost regression üzerinden gittim. Uzun sürdüğü için en uygun parametreleri gridsearch kullanarak seçmedim. Veri de 39 tane sektör vardı dolayısıyla 39 tane id vardı. Açıkçası adil bir yarışma değildi. Normalde regresyon analizi yaparken yapmayacagım şeylerin evaluation score' umu iyileştirdiğini görmek beni çok şaşırttı. İstatistik mezunu biri olarak şunu rahatlıkla söyleyebilirim ki tek bir metrik üzerinden bir modelin iyiliğini kötülüğünü belirleyemezsiniz. Ayrıca hata metriklerinin hesaplanmasında farklı matematiksel işlemler uygulanır. Bu analizde mse ve mae heaplattıgımda bunlarda bir düşüş olmasına rağmen yarışmada sıralamama olumsuz etkiler gözlemlediğim oldu. Bu durum yarışma için daha fazla zaman geçirmek yerine vaktimi başka şeylere harcamaya itti. Açıkçası istatistiksel temellere oturtarak ilerleyecek olsaydım kesinlikle bu kadar sığ bir yaklaşımda olmazdım. Ancak burada amaç yarışmanın benden istediği üzere rmsle' yi düşürmekti. Son olarak 11. yüklemeyi yaptım ve 0.11884 score elde ettim. Yarışmayı 19. olarak tamamladım. Üzerine daha çok uğraşılıp farklı regresyon algoritmaları denenebilirdi. Günlük 3 yükleme hakkımız vardı. 
